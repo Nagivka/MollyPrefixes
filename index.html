@@ -2,139 +2,522 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Установка и настройка MollyPrefixes 1.0.0 для Paper, Purpur и LuckPerms">
-<title>MollyPrefixes 1.0.0 — документация</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="MollyPrefixes 1.0.0: установка, ресурспак, привилегии LuckPerms и решения частых проблем.">
+<title>MollyPrefixes 1.0.0 — справка</title>
 <style>
-:root{color-scheme:dark;--bg:#111621;--panel:#1b2432;--line:#344153;--fg:#edf2fb;--muted:#b7c5d9;--link:#9bddd0}
+:root{color-scheme:light;--bg:#f9f9ff;--low:#f0f2fb;--high:#e8ebf6;--ink:#191c24;--muted:#444958;--line:#c5c9d9;--primary:#3c568c;--box:#d9e2ff;--on-box:#102b5d;--secondary:#dbe3fb;--on-secondary:#182b49;--state:#435d9518}
+:root[data-theme=dark]{color-scheme:dark;--bg:#11131b;--low:#191c26;--high:#252a38;--ink:#e3e6f2;--muted:#c5c9d9;--line:#454a59;--primary:#aec6ff;--box:#294578;--on-box:#d9e2ff;--secondary:#344561;--on-secondary:#dbe4ff;--state:#c6d5ff20}
+@media(prefers-color-scheme:dark){:root:not([data-theme]){color-scheme:dark;--bg:#11131b;--low:#191c26;--high:#252a38;--ink:#e3e6f2;--muted:#c5c9d9;--line:#454a59;--primary:#aec6ff;--box:#294578;--on-box:#d9e2ff;--secondary:#344561;--on-secondary:#dbe4ff;--state:#c6d5ff20}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:1rem/1.65 system-ui,sans-serif}
-a{color:var(--link);text-underline-offset:.2em}
-a:focus-visible,summary:focus-visible{outline:2px solid var(--link);outline-offset:4px}
-.wrap{width:min(100% - 2rem,68rem);margin-inline:auto}
-header{padding:3.6rem 0 2rem;border-bottom:1px solid var(--line);background:linear-gradient(145deg,#243549,#161c2a 75%)}
-header p{max-width:55ch;color:var(--muted)}
-.badge{display:inline-block;border:1px solid #5d807f;border-radius:.35rem;padding:.15rem .55rem;font-size:.85rem;color:var(--link)}
-h1,h2,h3{line-height:1.2}
-h1{font-size:clamp(2.25rem,7vw,4.4rem);letter-spacing:-.04em;margin:.65rem 0}
-h2{font-size:1.65rem;margin:0 0 1rem}
-h3{margin:1.4rem 0 .5rem}
-nav ul{display:flex;flex-wrap:wrap;gap:.5rem 1rem;list-style:none;padding:0}
-nav a{display:block;padding:.15rem 0}
-main{padding:2rem 0}
-section{padding:clamp(1rem,3vw,2rem);margin:0 0 1rem;border:1px solid var(--line);border-radius:.7rem;background:var(--panel)}
-li+li{margin-top:.35rem}
-nav li+li{margin-top:0}
-pre{overflow:auto;background:#101621;border:1px solid var(--line);padding:.85rem;border-radius:.4rem}
-code{font-family:ui-monospace,Consolas,monospace;font-size:.9em;overflow-wrap:anywhere;color:#d9f3ee}
-pre code{overflow-wrap:normal}
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;vertical-align:top;padding:.55rem;border-bottom:1px solid var(--line)}
-th{color:var(--muted)}
-.note{border-left:3px solid var(--link);padding:.15rem .9rem;background:#151d29}
+[hidden]{display:none!important}
+html{scroll-padding-top:1.5rem}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.58 Roboto,system-ui,sans-serif}
+:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+a{color:var(--primary);text-underline-offset:.2em}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+svg{width:1.3rem;height:1.3rem;flex:none;fill:currentColor}
+.wrap{width:min(100% - 2rem,74rem);margin-inline:auto}
+.skip{position:absolute;left:1rem;top:-5rem;z-index:2;padding:.65rem 1rem;border-radius:1rem;background:var(--box);color:var(--on-box)}
+.skip:focus{top:.75rem}
+.bar{border-bottom:1px solid var(--line)}
+.bar .wrap{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+.brand{display:inline-flex;align-items:center;gap:.65rem;color:var(--ink);text-decoration:none;font-weight:650}
+.mark{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:var(--box);color:var(--on-box);font-size:.85rem}
+.icon-button{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:44px;padding:.45rem .75rem;border:0;border-radius:999px;background:transparent}
+.icon-button:hover,.results a:hover,summary:hover{background:var(--state)}
+.hero{margin-top:1rem;padding:clamp(1.15rem,3vw,2.25rem);border-radius:32px;background:var(--box);color:var(--on-box)}
+.eyebrow{margin:0 0 .55rem;font-size:.84rem;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+h1,h2,h3{line-height:1.2;overflow-wrap:anywhere}
+h1{margin:.15rem 0 .55rem;font-size:clamp(2rem,6vw,3.5rem);font-weight:570;letter-spacing:-.045em}
+.hero p{margin:0 0 .85rem}
+.searchbar{display:flex;align-items:center;gap:.6rem;max-width:43rem;min-height:56px;padding:.25rem .5rem .25rem 1rem;border-radius:28px;background:var(--high);color:var(--ink)}
+.searchbar:focus-within{outline:2px solid var(--primary)}
+.searchbar input{width:100%;min-width:0;border:0;background:transparent;outline:none;padding:.55rem 0}
+.searchbar input::placeholder{color:var(--muted);opacity:1}
+.searchbar input::-webkit-search-cancel-button{display:none}
+.searchbar .icon-button{width:44px;flex:none;padding:0}
+.searchbar kbd{flex:none;margin-right:.45rem;padding:0 .35rem;border:1px solid var(--line);border-radius:.35rem;color:var(--muted)}
+.pills{display:flex;flex-wrap:wrap;gap:.55rem;margin:1rem 0 0;padding:0;list-style:none}
+.pills a{display:inline-flex;align-items:center;min-height:40px;padding:.4rem .9rem;border-radius:999px;font-size:.9rem;font-weight:600;text-decoration:none;background:var(--secondary);color:var(--on-secondary)}
+.pills a:hover,.nav a:hover{box-shadow:inset 0 0 0 40px var(--state)}
+.results{margin-top:1rem;padding:1rem 1.25rem;border-radius:24px;background:var(--low)}
+.results ul{list-style:none;padding:0;margin:.55rem 0 0}
+.results li+li{border-top:1px solid var(--line)}
+.results a{display:block;padding:.65rem .4rem;text-decoration:none;border-radius:10px}
+.results strong,.results span{display:block}
+.results span{color:var(--muted);font-size:.9rem}
+.layout{display:grid;grid-template-columns:12rem minmax(0,1fr) 12rem;gap:clamp(1rem,2.5vw,2rem);padding-block:1.5rem 2rem}
+.nav,.toc{position:sticky;top:1.2rem;align-self:start;max-height:calc(100vh - 2.4rem);overflow:auto}
+.nav p,.toc p{padding-left:.8rem;color:var(--muted)}
+.nav ul{list-style:none;padding:0;margin:0;display:grid;gap:.2rem}
+.nav ul+p{margin-top:1.15rem}
+.nav a{display:block;padding:.55rem .8rem;border-radius:999px;color:var(--ink);text-decoration:none;font-size:.94rem}
+.nav a[aria-current=page]{background:var(--secondary);color:var(--on-secondary);font-weight:600}
+#chapter-toggle{display:none}
+.toc{border-left:1px solid var(--line)}
+.toc ul{list-style:none;padding:0;margin:0}
+.toc a{display:block;padding:.32rem .8rem;color:var(--muted);text-decoration:none;font-size:.9rem}
+.toc a:hover{text-decoration:underline;color:var(--primary)}
+.breadcrumb{margin:0 0 .75rem;color:var(--muted);font-size:.875rem}
+.pager{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+.pager a{display:block;padding:.65rem .85rem;border:1px solid var(--line);border-radius:16px;text-decoration:none}
+.pager a:hover{background:var(--state)}
+.pager small{display:block;color:var(--muted)}
+section{margin:0 0 1rem;padding:clamp(1rem,3vw,1.8rem);border-radius:24px;background:var(--low)}
+section:target,details:target,tr:target,h3:target{outline:2px solid var(--primary);outline-offset:-2px}
+h2{margin:0 0 .9rem;font-size:clamp(1.5rem,3vw,2rem);font-weight:580;letter-spacing:-.025em}
+h3{font-size:1.14rem;margin:1.25rem 0 .5rem}
+p{margin:.5rem 0 .85rem}
+ol,ul{padding-left:1.35rem}
+main li+li{margin-top:.3rem}
+.note{margin:.85rem 0 0;padding:.8rem 1rem;border-radius:16px;background:var(--secondary);color:var(--on-secondary)}
+.note p{margin:0}
+code,kbd{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}
+code{color:var(--primary)}
+.table{overflow:auto}
+table{width:100%;border-collapse:collapse;text-align:left}
+th,td{padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.9rem;color:var(--muted);font-weight:650}
+details{margin:.5rem 0;border-radius:16px;background:var(--high)}
+summary{display:flex;align-items:center;justify-content:space-between;gap:.7rem;min-height:50px;padding:.65rem .9rem;cursor:pointer;list-style:none;font-weight:650;border-radius:inherit}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";width:.5rem;height:.5rem;flex:none;margin:0 .15rem .2rem .2rem;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg)}
+details[open] summary::after{transform:rotate(225deg);margin-bottom:-.15rem}
+.answer{padding:0 .95rem .75rem;color:var(--muted)}
+.answer p:last-child,.answer ol:last-child{margin-bottom:0}
 footer{padding:0 0 2rem;color:var(--muted)}
-@media print{
-:root{color-scheme:light;--bg:white;--panel:white;--line:#aaa;--fg:#171717;--muted:#333;--link:#004c40}
-header,pre,.note{background:white}
-code{color:inherit}
-}
+@media(max-width:1000px){.layout{grid-template-columns:11rem minmax(0,1fr)}.toc{grid-column:2;grid-row:1;position:static;border:0;background:var(--low);border-radius:16px;padding:.5rem;max-height:none}.toc ul{display:flex;flex-wrap:wrap}main{grid-column:2}.nav{grid-row:1/span 2}}
+@media(max-width:760px){.layout{grid-template-columns:minmax(0,1fr);gap:1rem}.nav{grid-row:auto;position:static;max-height:none}.nav p{padding-left:0}.nav ul{display:flex;flex-wrap:wrap}.nav a{background:var(--high)}#chapter-toggle{display:flex;border:1px solid var(--line);background:var(--low)}#chapter-toggle[aria-expanded=false]+#chapter-list{display:none}.toc,main{grid-column:1;grid-row:auto}.toc{order:1}main{order:2}}
+@media(max-width:420px){.searchbar kbd,.theme-label{display:none}.wrap{width:calc(100% - 1.25rem)}.hero{border-radius:24px}.pills{gap:.35rem}.pills a{min-height:38px;padding-inline:.65rem;font-size:.82rem}}
+@media print{.bar,.searchbar,.pills,.nav,.toc,.pager,.results,.skip,.breadcrumb{display:none!important}.layout{display:block}main>section[hidden]{display:block!important}.hero,section,details,.note{background:white;color:black;border:1px solid #aaa}body,code,a,.answer{background:white;color:black}}
 </style>
 </head>
-<body>
-<header>
+<body id="top">
+<a class="skip" href="#main">Перейти к инструкции</a>
+<header class="bar"><div class="wrap">
+<a class="brand" href="#top"><span class="mark" aria-hidden="true">MP</span>MollyPrefixes</a>
+<button type="button" class="icon-button" id="theme" aria-label="Сменить тему" hidden>
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2v16a8 8 0 1 1 0-16Z"/></svg><span class="theme-label">Тема</span>
+</button>
+</div></header>
 <div class="wrap">
-<span class="badge">Документация · 1.0.0</span>
-<h1>MollyPrefixes</h1>
-<p>Цветные и анимированные префиксы для групп LuckPerms. Каждый префикс собирается из двух PNG: фона и надписи.</p>
-<nav aria-label="Содержание"><ul>
-<li><a href="#install">Установка</a></li><li><a href="#pack">Ресурспак</a></li>
-<li><a href="#ranks">Группы</a></li><li><a href="#menus">Меню</a></li>
-<li><a href="#chat">Чат и TAB</a></li><li><a href="#commands">Команды</a></li>
-<li><a href="#troubleshooting">Проверка</a></li>
-</ul></nav>
+<div class="hero">
+<p class="eyebrow">Документация · 1.0.0</p>
+<h1>Справка MollyPrefixes</h1>
+<p>Установка, префиксы LuckPerms и решения частых ошибок.</p>
+<div class="searchbar" role="search" id="searchbar" hidden>
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3a7 7 0 1 0 4.9 12l5 5 1.4-1.4-5-5A7 7 0 0 0 10 3Zm0 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"/></svg>
+<input type="search" id="search" aria-label="Поиск по инструкции" aria-controls="results" placeholder="Ошибка, команда или настройка" autocomplete="off" spellcheck="false">
+<kbd id="shortcut" aria-hidden="true">/</kbd>
+<button type="button" class="icon-button" id="clear" aria-label="Очистить поиск" hidden>✕</button>
 </div>
-</header>
-<main class="wrap">
-<section id="install">
-<h2>Установка</h2>
+<ul class="pills" aria-label="Частые вопросы">
+<li><a href="#install">Как установить</a></li><li><a href="#squares">Квадраты вместо префикса</a></li>
+<li><a href="#animation-still">Анимации стоят</a></li><li><a href="#wrong-prefix">Старый префикс в чате</a></li>
+</ul>
+</div>
+<div class="results" id="results" aria-label="Результаты поиска" hidden>
+<p id="search-status" role="status"></p><ul id="search-list"></ul>
+</div>
+</div>
+<div class="wrap layout">
+<nav class="nav" aria-label="Содержание">
+<button type="button" class="icon-button" id="chapter-toggle" aria-expanded="false" aria-controls="chapter-list" hidden>Главы</button>
+<div id="chapter-list">
+<p class="eyebrow">Начало работы</p>
+<ul>
+<li><a href="#install">Установка</a></li>
+</ul>
+<p class="eyebrow">Настройка</p>
+<ul>
+<li><a href="#pack">Ресурспак</a></li>
+<li><a href="#ranks">Группы и PNG</a></li><li><a href="#menus">Меню и доступ</a></li>
+<li><a href="#chat">Чат и TAB</a></li>
+</ul>
+<p class="eyebrow">Справочник</p>
+<ul>
+<li><a href="#commands">Команды и права</a></li>
+<li><a href="#config">Параметры конфига</a></li>
+<li><a href="#files">Файлы и перенос</a></li>
+</ul>
+<p class="eyebrow">Поддержка</p>
+<ul>
+<li><a href="#troubleshooting">Решение проблем</a></li>
+</ul>
+</div>
+</nav>
+<main id="main">
+<p class="breadcrumb" id="breadcrumb" hidden></p>
+<section id="install" data-search data-keywords="скачать установка jar java purpur paper спигот зависимость плагины plugin luckperms запуск папка plugins">
+<h2>Установка за три шага</h2>
+<div class="note"><p>Если LuckPerms уже установлен, добавьте только <code>MollyPrefixes-1.0.0.jar</code>. Иначе нужны оба JAR из комплекта. TAB и PlaceholderAPI подключаются по необходимости.</p></div>
 <ol>
-<li>Подготовьте Paper или Purpur. Сборка проверена на Purpur 1.21.8 с Java 21. API плагина рассчитан на Paper 1.21.4 и выше.</li>
-<li>Остановите сервер. Положите <code>MollyPrefixes-1.0.0.jar</code> в <code>plugins/</code>. Если LuckPerms ещё отсутствует, добавьте <code>LuckPerms-Bukkit-5.5.91.jar</code> из комплекта. Если LuckPerms уже установлен, используйте имеющийся JAR.</li>
-<li>Запустите сервер. Плагин создаст <code>plugins/MollyPrefixes/config.yml</code> и соберёт <code>MollyPrefixes-pack.zip</code>. В игре с правом администратора выполните <code>/mollyprefixes status</code>.</li>
-<li>Настройте доставку ZIP игрокам и откройте <code>/prefixes</code>. На чистой установке доступно нейтральное оформление для группы <code>default</code>.</li>
+<li>На остановленном сервере Paper или Purpur положите нужные JAR в <code>plugins/</code>. Проверенная связка — Purpur 1.21.8, Java 21, LuckPerms 5.5.91.</li>
+<li>Запустите сервер и выполните <code>/mollyprefixes status</code>. Появятся <code>plugins/MollyPrefixes/config.yml</code> и сгенерированный <code>MollyPrefixes-pack.zip</code>.</li>
+<li><a href="#pack">Подключите ресурспак</a>. В игре откройте <code>/prefixes</code> и выберите цвет. Начальное оформление привязано к группе <code>default</code>.</li>
 </ol>
-<p class="note">При обновлении сохраните папку <code>plugins/MollyPrefixes/</code>. Она содержит настройки, назначения Unicode и выбор игроков. Старые раздельные конфиги при первом запуске переносятся в новую структуру, исходники сохраняются как <code>.bak</code>.</p>
-<p><a href="https://docs.papermc.io/paper/getting-started/">Установка Paper и требования к Java</a> · <a href="https://luckperms.net/download">Загрузки LuckPerms</a></p>
+<p><a href="https://docs.papermc.io/paper/getting-started/">Требования к серверу Paper</a> · <a href="https://luckperms.net/download">LuckPerms для Bukkit/Paper</a></p>
 </section>
-<section id="pack">
-<h2>Доставка ресурспака</h2>
-<h3>Без сборщика</h3>
+<section id="pack" data-search data-keywords="ресурс пак текстуры resourcepack resource-pack скачать zip установка nexo itemsadder craftengine">
+<h2>Как выдать ресурспак игрокам</h2>
+<p>Используйте ZIP, сгенерированный на вашем сервере. В нём записаны Unicode вашего конфига.</p>
+<h3 id="standalone" data-search data-keywords="ресурспак ссылка url хостинг https http сервер properties standalone ip загрузка">Без сборщика</h3>
 <ol>
-<li>Укажите <code>resource-pack.integration: standalone</code>.</li>
-<li>Разместите сгенерированный <code>plugins/MollyPrefixes/MollyPrefixes-pack.zip</code> на хостинге файлов. Прямая HTTP(S)-ссылка должна отдавать ZIP и быть доступна игрокам.</li>
-<li>Запишите ссылку в <code>resource-pack.delivery-url</code>, оставьте <code>resource-pack</code> в <code>server.properties</code> пустым и выполните <code>/mollyprefixes reload</code>. При изменении локального ZIP обновите файл по указанной ссылке. Плагин вычисляет SHA‑1 по локальному архиву.</li>
+<li>Установите <code>resource-pack.integration: standalone</code>. Разместите <code>plugins/MollyPrefixes/MollyPrefixes-pack.zip</code> по прямой HTTP(S)-ссылке, доступной игрокам.</li>
+<li>Укажите её в <code>resource-pack.delivery-url</code>. Поле <code>resource-pack</code> в <code>server.properties</code> оставьте пустым.</li>
+<li>После изменения текстур пересоберите ZIP, обновите файл по тому же адресу и выполните <code>/mollyprefixes reload</code>. Плагин передаёт клиенту SHA‑1 локального ZIP.</li>
 </ol>
-<h3>С установленным сборщиком</h3>
-<p>Выберите один режим <code>resource-pack.integration</code>. Режим <code>auto</code> выбирает единственный обнаруженный сборщик и переходит в <code>standalone</code>, если сборщиков несколько или их нет. Доставку игрокам настраивайте в выбранном сборщике.</p>
-<table>
-<thead><tr><th scope="col">Режим</th><th scope="col">Команда обновления</th></tr></thead>
+<h3 id="pack-manager" data-search data-keywords="nexo itemsadder craftengine авто auto интеграция импорт merge_font iazip reload">Со сборщиком</h3>
+<p>Укажите один режим <code>resource-pack.integration</code>. <code>auto</code> выбирает сборщик, если установлен ровно один из списка. Хостинг и отправку настраивайте в самом сборщике.</p>
+<div class="table"><table>
+<thead><tr><th scope="col">Режим</th><th scope="col">Куда экспортируется</th><th scope="col">Команда сборщика</th></tr></thead>
 <tbody>
-<tr><td><code>nexo</code></td><td><code>nexo reload pack</code></td></tr>
-<tr><td><code>itemsadder</code></td><td><code>iazip</code></td></tr>
-<tr><td><code>craftengine</code></td><td><code>ce reload all</code></td></tr>
+<tr><td><code>nexo</code></td><td><code>Nexo/pack/external_packs/MollyPrefixes-pack.zip</code></td><td><code>nexo reload pack</code></td></tr>
+<tr><td><code>itemsadder</code></td><td><code>ItemsAdder/contents/mollyprefixes_generated/resourcepack/</code></td><td><code>iazip</code></td></tr>
+<tr><td><code>craftengine</code></td><td><code>CraftEngine/resources/mollyprefixes_generated/resourcepack/</code></td><td><code>ce reload all</code></td></tr>
 </tbody>
-</table>
-<p>Если у сервера уже есть отдельный пак, добавьте его локальный ZIP или распакованную папку в <code>resource-pack.collision-sources</code>. Пути считаются от корня сервера. Для ручного объединения перенесите ресурсы MollyPrefixes и добавьте его провайдер <code>reference</code> в массив <code>providers</code> вашего <code>assets/minecraft/font/default.json</code>.</p>
-<p>Встроенные анимации требуют совместимого текстового шейдера. Причину конфликта видно в <code>/mollyprefixes status</code>. Для ItemsAdder проверьте <code>text_effects.enabled</code> в его конфиге. Режим <code>animations.mode: external</code> использует маркеры внешнего пака, <code>bundled</code> добавляет встроенный шейдер, <code>off</code> отключает анимации.</p>
+</table></div>
+<p>Плагин вызывает команду после экспорта, если <code>resource-pack.reload-integration</code> включён. В Nexo проверьте <code>Pack.dispatch.send_on_reload</code>. В CraftEngine workflow должен собрать, разместить и выдать пак. При ручной настройке конфликтов шрифтов используйте <code>merge_font</code>.</p>
+<h3 id="merge" data-search data-keywords="объединить два пака minecraft default merge collision sources pua unicode конфликт">Как объединить с другим паком</h3>
+<p>Добавьте путь к его локальному ZIP или распакованной папке в <code>resource-pack.collision-sources</code> относительно корня сервера. Это проверка конфликтов. Для ручного объединения перенесите <code>assets/mollyprefixes/</code> и добавьте его провайдер <code>reference</code> в массив <code>providers</code> файла <code>assets/minecraft/font/default.json</code>. Если нужны встроенные анимации, перенесите и текстовые core shaders, предварительно проверив конфликт с существующими.</p>
 </section>
-<section id="ranks">
-<h2>Оформление групп LuckPerms</h2>
+<section id="ranks" data-search data-keywords="привилегия группа новый ранг vip png картинки текстуры ширина высота unicode offset смещение">
+<h2>Своя группа и две текстуры</h2>
 <ol>
-<li>Подготовьте два прозрачных PNG одинакового размера, до 256 × 256. Фон лучше сделать в градациях серого, чтобы он хорошо тонировался. Текстовый слой задаёт белую надпись.</li>
-<li>Поместите PNG в папку <code>plugins/MollyPrefixes/textures/</code>. В <code>config.yml → prefixes</code> добавьте запись с уникальным ID. Укажите <code>group</code> с точным именем группы LuckPerms, <code>name</code> для подписи и пути <code>background</code> и <code>text</code> от папки MollyPrefixes.</li>
-<li>Примените конфиг через <code>/mollyprefixes reload</code>. Проверьте назначение через <code>/mollyprefixes glyphs &lt;id&gt;</code>.</li>
+<li>Подготовьте прозрачные PNG на одинаковом холсте до <strong>256 × 256</strong>. Серый фон лучше поддаётся тонировке. Альфа-канал второго PNG задаёт форму белой надписи.</li>
+<li>Положите PNG в <code>plugins/MollyPrefixes/textures/</code>. В <code>config.yml → prefixes</code> добавьте уникальный ID. Укажите <code>group</code> с точным именем группы LuckPerms, <code>name</code> для подписи в меню и пути <code>background</code> и <code>text</code> от папки MollyPrefixes.</li>
+<li>Убедитесь, что игрок входит в эту группу, и выполните <code>/mollyprefixes reload</code>. Команда <code>/mollyprefixes glyphs &lt;id&gt;</code> покажет коды и смещение.</li>
 </ol>
-<p>Игрок получает меню старшей настроенной привилегии. Сначала учитывается вес группы LuckPerms, затем приоритет её префикса в текущем контексте и основная группа. Unicode и смещение назначаются автоматически. Если нужно задать Unicode вручную, используйте <code>background.unicode</code>, <code>text.unicode</code> и <code>shift.unicode</code> в диапазоне <code>U+E000–U+F8FF</code>.</p>
-<p>Раздел <code>rank-color.colors</code> задаёт обычные цвета. Раздел <code>animations.effects</code> задаёт доступные пресеты. Поля <code>ranks</code> и <code>permission</code> ограничивают доступ. В <code>rank-backgrounds.defaults</code> можно задать подпись, смещение и эффект по умолчанию для группы.</p>
+<details id="rank-order" data-search data-keywords="приоритет группа старший ранг weight primary group вес наследование показывается не та привилегия">
+<summary>Как выбирается старший ранг?</summary>
+<div class="answer"><p>Среди доступных игроку групп с оформлением выбирается группа с наибольшим весом LuckPerms. При равенстве сравнивается приоритет префикса группы в текущем контексте, затем учитывается основная группа. ID оформления в <code>prefixes</code> может отличаться от имени в <code>group</code>.</p></div>
+</details>
+<details id="manual-glyphs" data-search data-keywords="сменить юникод unicode e000 f8ff ручной глиф offset сместитель пробел зазор">
+<summary>Как изменить Unicode или смещение вручную?</summary>
+<div class="answer"><p>Вместо короткого пути укажите <code>background.file</code> и <code>text.file</code>. Коды задаются в <code>background.unicode</code>, <code>text.unicode</code> и <code>shift.unicode</code> из диапазона <code>U+E000–U+F8FF</code>. Пустые поля используют автоматический подбор. Для ручного сдвига задайте <code>shift.offset</code>. Отрицательное значение сдвигает надпись влево.</p></div>
+</details>
 </section>
-<section id="menus">
-<h2>Меню игрока и администратора</h2>
-<p>Игрок открывает <code>/prefixes</code> или <code>/cosmetics</code> и выбирает цвет либо анимацию. Анимации идут подряд по типам. Для одноцветного эффекта можно выбрать оттенок из палитры ранга. «Свой цвет (HEX)» позволяет ввести RGB, посмотреть предпросмотр и вернуться к недавним цветам. «Сбросить» возвращает префикс LuckPerms.</p>
-<p>Администратор открывает <code>/mollyprefixes → Привилегии</code> и выбирает группу. ЛКМ переключает доступ к конкретному цвету или эффекту, ПКМ возвращает ограничение из YAML. Кнопка «Свой HEX» управляет собственным цветом отдельно. Изменения записываются в <code>admin-state.yml</code>.</p>
+<section id="menus" data-search data-keywords="gui меню косметика /cosmetics цвет анимации настройки hex настройки админа ограничения ranks permission">
+<h2>Цвета, анимации и права</h2>
+<h3 id="player-menu">Игроку</h3>
+<p><code>/prefixes</code> открывает расцветки старшей привилегии. Анимации уже сгруппированы по типам. Для одноцветной анимации можно выбрать оттенок из доступных обычных цветов. Свой HEX вводится в меню или через <code>/prefixes color &lt;#RRGGBB&gt;</code>. «Сбросить» возвращает префикс LuckPerms, недавние цвета сохраняются.</p>
+<h3 id="admin-menu">Администратору</h3>
+<p><code>/mollyprefixes → Привилегии → группа</code>. Выберите «Цвета» или «Анимации». ЛКМ переключает доступ группы, ПКМ возвращает настройку из YAML. «Свой HEX» переключается отдельно. Право <code>permission</code>, заданное для варианта, проверяется дополнительно.</p>
+<p>В <code>config.yml</code> за палитру отвечает <code>rank-color.colors</code>, за эффекты — <code>animations.effects</code>. Поле <code>ranks</code> принимает имена групп LuckPerms. В <code>rank-backgrounds.defaults</code> задаются подпись, смещение и эффект по умолчанию.</p>
 </section>
-<section id="chat">
-<h2>Чат, TAB и плейсхолдеры</h2>
-<p>MollyPrefixes добавляет персональный префикс в LuckPerms. В настройках чата и TAB укажите плейсхолдер префикса LuckPerms, который поддерживает ваш форматтер. Установите приоритет <code>rank-display.weight</code> выше приоритета обычного префикса, если личное оформление должно его перекрывать.</p>
-<p>Если установлен PlaceholderAPI, доступны <code>%mollyprefixes_prefix%</code>, <code>%mollyprefixes_rank%</code>, <code>%mollyprefixes_rank_tab%</code>, <code>%mollyprefixes_rankname%</code>, <code>%mollyprefixes_rankcolor%</code> и <code>%mollyprefixes_rankbg%</code>. Для формата MiniMessage используйте <code>%mollyprefixes_rank_minimessage%</code> там, где форматтер разбирает MiniMessage после подстановки.</p>
-<p>Форматтер должен сохранять Unicode и полный RGB. Замена оттенков на 16 цветов ломает служебные маркеры анимаций.</p>
+<section id="chat" data-search data-keywords="чат таб табуляция tab prefix префикс placeholderapi papi minimessage legacy lpc формат ника над головой">
+<h2>Вывод в чате и TAB</h2>
+<p>Вставьте плейсхолдер LuckPerms в настройку вашего форматтера. TAB может использовать <code>%luckperms-prefix%</code> в <code>tabprefix</code> и <code>tagprefix</code>. В LPC префикс LuckPerms выводит <code>{prefix}</code> в <code>chat-format</code>.</p>
+<h3 id="placeholders">PlaceholderAPI</h3>
+<div class="table"><table>
+<thead><tr><th scope="col">Плейсхолдер</th><th scope="col">Что возвращает</th></tr></thead>
+<tbody>
+<tr><td><code>%mollyprefixes_prefix%</code></td><td>Текущий префикс. Псевдонимы — <code>%mollyprefixes_rank%</code> и <code>%mollyprefixes_rank_tab%</code>.</td></tr>
+<tr><td><code>%mollyprefixes_rank_minimessage%</code></td><td>Префикс для форматтера, который разбирает MiniMessage после подстановки.</td></tr>
+<tr><td><code>%mollyprefixes_rankname%</code>, <code>%mollyprefixes_rankcolor%</code>, <code>%mollyprefixes_rankbg%</code></td><td>Название, код цвета и глиф фона активного оформления.</td></tr>
+</tbody>
+</table></div>
+<p>Чат и TAB должны сохранять Unicode и RGB. Сместитель уже входит в <code>minecraft:default</code>. Для него не нужен текстовый тег.</p>
 </section>
-<section id="commands">
+<section id="commands" data-search data-keywords="список команд право permissions op mollyprefixes use admin custom color /mprefix">
 <h2>Команды и права</h2>
-<table>
+<div class="table"><table>
 <thead><tr><th scope="col">Команда</th><th scope="col">Действие</th></tr></thead>
 <tbody>
-<tr><td><code>/prefixes</code></td><td>Открыть меню игрока.</td></tr>
-<tr><td><code>/prefixes color &lt;#RRGGBB&gt;</code></td><td>Применить свой цвет.</td></tr>
-<tr><td><code>/mollyprefixes [admin]</code></td><td>Открыть админ-панель. Короткий вариант — <code>/mprefix</code>.</td></tr>
-<tr><td><code>/mollyprefixes ranks</code></td><td>Открыть настройки привилегий.</td></tr>
-<tr><td><code>/mollyprefixes status</code></td><td>Проверить сборщик, ZIP и статус анимаций.</td></tr>
-<tr><td><code>/mollyprefixes reload</code></td><td>Прочитать конфиг заново и пересобрать ZIP.</td></tr>
-<tr><td><code>/mollyprefixes glyphs &lt;id&gt;</code></td><td>Показать Unicode фона, сместителя и текста.</td></tr>
-<tr><td><code>/mollyprefixes code &lt;id&gt; &lt;цвет&gt;</code></td><td>Скопировать команду LuckPerms для постоянного группового префикса.</td></tr>
+<tr id="cmd-prefixes" data-search><td><code>/prefixes</code> · <code>/cosmetics</code></td><td>Открыть меню игрока.</td></tr>
+<tr id="cmd-color" data-search><td><code>/prefixes color &lt;#RRGGBB&gt;</code></td><td>Применить свой HEX.</td></tr>
+<tr id="cmd-admin" data-search><td><code>/mollyprefixes</code> · <code>/mprefix</code></td><td>Открыть админ-панель.</td></tr>
+<tr id="cmd-ranks" data-search><td><code>/mollyprefixes ranks</code></td><td>Открыть список групп для настройки доступа.</td></tr>
+<tr id="cmd-status" data-search><td><code>/mollyprefixes status</code></td><td>Узнать режим, путь к ZIP, статус шейдера и последнюю ошибку сборки.</td></tr>
+<tr id="cmd-reload" data-search><td><code>/mollyprefixes reload</code></td><td>Перечитать конфиги, пересобрать и экспортировать пак.</td></tr>
+<tr id="cmd-glyphs" data-search><td><code>/mollyprefixes glyphs &lt;id&gt;</code></td><td>Посмотреть глифы и смещение оформления.</td></tr>
+<tr id="cmd-code" data-search><td><code>/mollyprefixes code &lt;id&gt; &lt;цвет&gt;</code></td><td>Получить команду для постоянного префикса группы LuckPerms. Проверьте её приоритет перед выполнением.</td></tr>
+<tr id="cmd-help" data-search><td><code>/mollyprefixes help</code></td><td>Показать справку. Команды поддерживают подсказки по Tab.</td></tr>
 </tbody>
-</table>
-<p><code>mollyprefixes.use</code> открывает меню игрока, <code>mollyprefixes.custom-color</code> даёт доступ к HEX. Оба права включены по умолчанию. <code>mollyprefixes.admin</code> по умолчанию доступно операторам.</p>
+</table></div>
+<h3 id="permissions" data-search data-keywords="op permission доступ mollyprefixes use admin custom color">Права</h3>
+<p><code>mollyprefixes.use</code> и <code>mollyprefixes.custom-color</code> включены для игроков по умолчанию. Для админ-команд требуется <code>mollyprefixes.admin</code>, по умолчанию право оператора.</p>
 </section>
-<section id="troubleshooting">
-<h2>Если префикс не отображается</h2>
-<ul>
-<li><strong>Пустое меню.</strong> Проверьте имя группы в <code>prefixes.&lt;id&gt;.group</code>, наследование в LuckPerms и право <code>mollyprefixes.use</code>.</li>
-<li><strong>Вместо картинок символы или квадраты.</strong> Проверьте, что клиент принял свежий пак и в <code>minecraft:default</code> есть ссылка на шрифт MollyPrefixes.</li>
-<li><strong>Глифы работают, анимации стоят.</strong> Посмотрите статус шейдера и проверьте, сохраняется ли полный RGB в вашем формате чата.</li>
-<li><strong>В чате старый префикс.</strong> Проверьте, какой плейсхолдер использует форматтер и какой приоритет префикса выдаёт LuckPerms.</li>
-</ul>
+<section id="config" data-search data-keywords="config yml параметры настройки конфигурация ключи высота menu apply-on-join шаблон pack format">
+<h2>Параметры конфига</h2>
+<p>Основной файл — <code>plugins/MollyPrefixes/config.yml</code>. После правки выполните <code>/mollyprefixes reload</code>.</p>
+<details id="config-layout" data-search data-keywords="параметры шаблон расположение меню slots кнопки иконка материал title content slots высота ascent offset">
+<summary>Размер текстур и внешний вид меню</summary>
+<div class="answer"><p>В <code>prefixes.&lt;id&gt;</code> параметр <code>height</code> задаёт высоту глифа в игре, <code>ascent</code> — положение относительно строки, <code>icon</code> — материал предмета в меню. Раздел <code>menu</code> задаёт <code>title</code>, <code>size</code> и <code>content-slots</code>. Слоты нумеруются с нуля. Для кнопок используйте <code>slot</code>, <code>material</code>, <code>name</code>, <code>lore</code>, <code>enabled</code> и <code>custom-model-data</code>.</p></div>
+</details>
+<details id="config-animation" data-search data-keywords="настройка пресет свой эффект цвет палитра bundled external off text shadow animations mode">
+<summary>Режим анимаций, оттенки и тень</summary>
+<div class="answer"><p><code>animations.mode</code> принимает <code>bundled</code> для встроенных шейдеров, <code>external</code> для совместимого внешнего пака и <code>off</code> для отключения шейдерных анимаций. <code>animations.no-text-shadow</code> убирает тень Minecraft с текстового слоя в режиме <code>bundled</code>. В <code>animations.effects</code> поле <code>value</code> — служебный маркер, <code>preset</code> — исходный эффект, <code>color</code> или <code>colors</code> задают видимые оттенки.</p></div>
+</details>
+<details id="config-display" data-search data-keywords="приоритет rank display weight apply on join template автоматическое применение">
+<summary>Автоприменение и приоритет префикса</summary>
+<div class="answer"><p><code>rank-display.apply-on-join</code> автоматически применяет стандартное оформление старшей настроенной группы игрокам без сохранённого выбора. <code>rank-display.weight</code> задаёт приоритет персонального префикса в LuckPerms. В <code>rank-display.template</code> сохраните порядок <code>{effect}{background}{offset}&amp;f{text}</code>. <code>{space}</code> добавляет пробелы перед ником.</p></div>
+</details>
+<details id="config-pack" data-search data-keywords="watch автообновление require pack обязательный ресурспак reload command исключить source exclude">
+<summary>Пересборка и обязательный ресурспак</summary>
+<div class="answer"><p><code>resource-pack.watch</code> следит за конфигом, текстурами и внешними источниками. <code>resource-pack.exclude-sources</code> исключает пути из проверки конфликтов. В <code>standalone</code> с <code>delivery-url</code> параметр <code>resource-pack.require-pack</code> делает пак обязательным. При необходимости укажите <code>resource-pack.reload-command</code> без начального слеша.</p></div>
+</details>
 </section>
+<section id="troubleshooting" data-search data-keywords="ошибка проблемы не работает префикс помощь диагностика">
+<h2>Решение проблем</h2>
+<details id="load-fail" data-search data-keywords="unknown command неизвестная команда не запускается не загрузился missing dependency java UnsupportedClassVersionError">
+<summary>Команда неизвестна или плагин не загрузился</summary>
+<div class="answer"><p>Проверьте JAR в <code>plugins/</code>, запуск LuckPerms и версию Java. В консоли найдите первую ошибку рядом с <code>Enabling MollyPrefixes</code>. Если плагин отключился из-за конфига или PNG, исправьте запись и перезапустите сервер.</p></div>
+</details>
+<details id="no-menu" data-search data-keywords="пустое меню нет ранга нет привилегий не открывается prefixes доступ op permissions">
+<summary>Меню пустое или не открывается</summary>
+<div class="answer"><p>Сверьте <code>prefixes.&lt;id&gt;.group</code> с группой игрока в текущем мире. Проверьте <code>mollyprefixes.use</code>. Для админ-панели нужно <code>mollyprefixes.admin</code>. Если открылся другой ранг, проверьте <a href="#rank-order">порядок выбора</a>.</p></div>
+</details>
+<details id="squares" data-search data-keywords="квадраты вместо префикса прямоугольники иероглифы кракозябры знаки вопроса глиф png шрифт символы белый квадрат">
+<summary>Квадраты или символы вместо картинки</summary>
+<div class="answer"><ol><li>Откройте <code>/mollyprefixes status</code> и проверьте путь к свежему ZIP.</li><li>Убедитесь, что игрок разрешил ресурспаки для этого сервера.</li><li>В объединённом паке проверьте <code>assets/minecraft/font/default.json</code>. В <code>providers</code> должна остаться ссылка <code>mollyprefixes:prefixes</code>. Затем отправьте новый пак игрокам.</li></ol></div>
+</details>
+<details id="download-fail" data-search data-keywords="ресурспак ресурс пак не скачивается download failed failed download загрузка zip 404 403 хостинг hash sha1 localhost 127.0.0.1">
+<summary>Ресурспак не скачивается или скачивается старый</summary>
+<div class="answer"><p>Откройте ссылку на пак с другого устройства. Она должна отдавать ZIP без входа в аккаунт. В <code>standalone</code> сравните загруженный файл с локальным ZIP, обновите файл на хостинге и выполните <code>/mollyprefixes reload</code>. При установленном сборщике проверьте его хостинг и отправку. <code>localhost</code> и <code>127.0.0.1</code> у игрока ведут на его компьютер.</p></div>
+</details>
+<details id="animation-still" data-search data-keywords="анимация не работает не движется стоит замерла shader шейдер конфликт core text нет анимаций rgb hex 16 itemsadder">
+<summary>Префикс виден, но анимации стоят или пропали</summary>
+<div class="answer"><ol><li>Посмотрите строку «Анимации» в <code>/mollyprefixes status</code>. В <code>animations.mode: bundled</code> чужой текстовый шейдер отключает встроенные эффекты. В ItemsAdder проверьте конфликт с <code>text_effects.enabled</code>. Режим <code>external</code> требует совместимого внешнего пака.</li><li>Проверьте, что форматтер сохраняет полный RGB. Замена на 16 обычных цветов ломает служебные маркеры.</li><li>Если пропали лишь отдельные варианты, проверьте доступ группы, <code>ranks</code> и <code>permission</code>.</li></ol></div>
+</details>
+<details id="wrong-prefix" data-search data-keywords="старый другой префикс чате tab не обновляется не отображается нет не вижу пустой префикс nickname priority weight применить apply-on-join">
+<summary>В меню всё верно, а в чате или TAB старый префикс</summary>
+<div class="answer"><p>Выберите оформление в <code>/prefixes</code>. Проверьте плейсхолдер форматтера. Если личный префикс должен перекрывать групповой, задайте <code>rank-display.weight</code> выше приоритета группового префикса. Для автоматического применения без личного выбора задайте <code>rank-display.apply-on-join: true</code>. После сброса игрок выбирает оформление заново.</p></div>
+</details>
+<details id="hex-rejected" data-search data-keywords="свой цвет недоступен hex запрещен зарезервирован rgb кастомный цвет разрешение">
+<summary>Свой HEX недоступен или код не принимается</summary>
+<div class="answer"><p>Введите <code>#</code> и шесть шестнадцатеричных знаков. Проверьте <code>mollyprefixes.custom-color</code> и кнопку «Свой HEX» для группы в админ-меню. Если оттенок зарезервирован шейдером, выберите соседний RGB.</p></div>
+</details>
+<details id="unicode-conflict" data-search data-keywords="занят уже закреплен unicode юникод конфликт glyphs yml дублируется чужие символы e000 f8ff">
+<summary>В конфиге конфликт Unicode</summary>
+<div class="answer"><p>Оставьте конфликтующее поле <code>unicode</code> пустым для автоматического выбора или укажите другой свободный код. Добавьте локальную копию внешнего пака в <code>resource-pack.collision-sources</code> и выполните <code>/mollyprefixes reload</code>.</p></div>
+</details>
+<details id="broken-layout" data-search data-keywords="смещение буквы криво текст съехал плашка padding сдвиг png overlay">
+<summary>Надпись съехала относительно фона</summary>
+<div class="answer"><p>Проверьте одинаковый размер холстов и положение надписи на прозрачном слое. Сначала уберите ручной <code>shift.offset</code> и пересоберите пак. Если нужна тонкая настройка, корректируйте смещение на несколько пикселей.</p></div>
+</details>
+<details id="bad-config" data-search data-keywords="ошибка сборки yaml invalid configuration неверный путь формат слоты reload failed png 256 file not found">
+<summary>После правки конфига ZIP не пересобирается</summary>
+<div class="answer"><p>Выполните <code>/mollyprefixes reload</code> и прочитайте первую ошибку в консоли или <code>/mollyprefixes status</code>. Проверьте отступы YAML, регистр имён файлов, наличие обоих PNG и занятые слоты меню. При ошибке проверки плагин сохраняет предыдущий рабочий ZIP.</p></div>
+</details>
+<details id="pack-format" data-search data-keywords="неподдерживаемый ресурспак версия несовместимый pack format 1.21.4 1.21.8">
+<summary>Minecraft пишет, что версия пака несовместима</summary>
+<div class="answer"><p>Сверьте <code>pack-format</code> с версией клиента. Пак по умолчанию использует <code>64</code> для 1.21.8. Для 1.21.4 укажите <code>46</code>, пересоберите и заново отправьте ZIP. Наличие встроенных шейдеров для выбранного формата видно в <code>/mollyprefixes status</code>.</p></div>
+</details>
+</section>
+<section id="files" data-search data-keywords="перенос резервная копия backup обновление миграция файлы папка admin-state selections glyphs config">
+<h2>Файлы и перенос</h2>
+<div class="table"><table>
+<thead><tr><th scope="col">Файл</th><th scope="col">Содержимое</th></tr></thead>
+<tbody>
+<tr><td><code>config.yml</code> и <code>textures/</code></td><td>Настройки и исходные картинки.</td></tr>
+<tr><td><code>glyphs.yml</code></td><td>Назначения Unicode и история кодов.</td></tr>
+<tr><td><code>admin-state.yml</code></td><td>Ограничения по группам из админ-меню.</td></tr>
+<tr><td><code>selections.yml</code></td><td>Выборы, сбросы и недавние цвета игроков.</td></tr>
+</tbody>
+</table></div>
+<p>Сохраните папку <code>plugins/MollyPrefixes/</code> и данные LuckPerms. Старые раздельные настройки при обновлении переносятся автоматически, исходные файлы остаются как <code>.bak</code>. После запуска проверьте <code>/mollyprefixes status</code> и доставку ZIP.</p>
+</section>
+<nav class="pager" id="pager" aria-label="Переход между главами" hidden></nav>
 </main>
-<footer class="wrap">MollyPrefixes 1.0.0 · Инструкция администратора</footer>
+<nav class="toc" id="toc" aria-label="Оглавление главы" hidden>
+<p class="eyebrow">В этой главе</p><ul id="toc-list"></ul>
+</nav>
+</div>
+<footer class="wrap">MollyPrefixes 1.0.0 · <a href="#top">К началу</a></footer>
+<script>
+const root = document.documentElement;
+const theme = document.querySelector('#theme');
+const preference = matchMedia('(prefers-color-scheme: dark)');
+try {
+  const saved = localStorage.getItem('mollyprefixes-docs-theme');
+  if (saved === 'dark' || saved === 'light') root.dataset.theme = saved;
+} catch {}
+const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : preference.matches;
+const updateTheme = () => theme.setAttribute('aria-label', isDark() ? 'Включить светлую тему' : 'Включить тёмную тему');
+theme.hidden = false;
+updateTheme();
+preference.addEventListener('change', updateTheme);
+theme.addEventListener('click', () => {
+  root.dataset.theme = isDark() ? 'light' : 'dark';
+  updateTheme();
+  try { localStorage.setItem('mollyprefixes-docs-theme', root.dataset.theme); } catch {}
+});
+
+const search = document.querySelector('#search');
+const clearSearch = document.querySelector('#clear');
+const results = document.querySelector('#results');
+const status = document.querySelector('#search-status');
+const resultList = document.querySelector('#search-list');
+const shortcut = document.querySelector('#shortcut');
+const normalize = value => value.toLowerCase().replaceAll('ё', 'е').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const words = value => value ? value.split(' ') : [];
+const compact = value => value.replace(/\s+/g, ' ').trim();
+const entries = [...document.querySelectorAll('[data-search]')].map(node => {
+  const title = compact((node.querySelector('h2, summary, td') || node).textContent);
+  const titleText = normalize(title);
+  const keywords = normalize(node.dataset.keywords || '');
+  const body = node.matches('h3') ? node.nextElementSibling : node;
+  const description = compact((node.querySelector('td:nth-child(2), .answer p, .answer li, p, li') || body || node).textContent);
+  return {
+    id: node.id, title, titleText, keywords, specific: !node.matches('section'),
+    titleWords: words(titleText), keywordWords: words(keywords),
+    bodyWords: words(normalize(body?.textContent || '')),
+    description: description.length > 140 ? description.slice(0, 137).trimEnd() + '…' : description
+  };
+});
+const ignored = new Set(['в','на','по','с','для','что','как','и','у','из','от','почему','где']);
+function tokenScore(token, list, points) {
+  if (list.includes(token)) return points;
+  if (token.length >= 4 && list.some(word => word.startsWith(token)
+    || (token.length >= 6 && word.length >= 6 && word.slice(0, 5) === token.slice(0, 5)))) return points - 1;
+  return 0;
+}
+function score(entry, query, tokens, partial = false) {
+  const scores = tokens.map(token => Math.max(
+    tokenScore(token, entry.titleWords, 7), tokenScore(token, entry.keywordWords, 6),
+    tokenScore(token, entry.bodyWords, 2)
+  ));
+  const hits = scores.filter(Boolean).length;
+  if (hits < (partial ? Math.max(2, Math.ceil(tokens.length * .6)) : tokens.length)) return 0;
+  return scores.reduce((sum, value) => sum + value, 0)
+    + (entry.titleText === query ? 24 : entry.titleText.includes(query) ? 12 : 0)
+    + (entry.keywords.includes(query) ? 5 : 0) + Number(entry.specific);
+}
+function renderResults() {
+  const query = normalize(search.value);
+  results.hidden = !query;
+  clearSearch.hidden = !search.value;
+  shortcut.hidden = !!search.value;
+  resultList.replaceChildren();
+  if (!query) {
+    status.textContent = '';
+    return;
+  }
+  const significant = words(query).filter(token => !ignored.has(token));
+  const tokens = [...new Set(significant.length ? significant : words(query))];
+  const find = partial => entries.map(entry => ({ entry, score: score(entry, query, tokens, partial) }))
+    .filter(match => match.score > 0).sort((a, b) => b.score - a.score);
+  const exact = find(false);
+  const matches = exact.length ? exact : find(true);
+  const shown = matches.slice(0, 8);
+  status.textContent = shown.length
+    ? (exact.length ? 'Показано ' : 'Ближайшие ответы · ') + shown.length + ' из ' + matches.length
+    : 'Совпадений нет. Попробуйте «квадраты», «HEX» или «reload», либо откройте раздел «Решение проблем».';
+  for (const {entry} of shown) {
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    const title = document.createElement('strong');
+    const description = document.createElement('span');
+    link.href = '#' + entry.id;
+    title.textContent = entry.title;
+    description.textContent = entry.description;
+    link.append(title, description);
+    item.append(link);
+    resultList.append(item);
+  }
+}
+const chapterLinks = [...document.querySelectorAll('.nav a')];
+const chapters = chapterLinks.map(link => document.getElementById(link.hash.slice(1)));
+const toc = document.querySelector('#toc');
+const tocList = document.querySelector('#toc-list');
+const pager = document.querySelector('#pager');
+const breadcrumb = document.querySelector('#breadcrumb');
+const chapterToggle = document.querySelector('#chapter-toggle');
+chapterToggle.hidden = false;
+chapterToggle.addEventListener('click', () => {
+  chapterToggle.setAttribute('aria-expanded', String(chapterToggle.getAttribute('aria-expanded') !== 'true'));
+});
+for (const link of chapterLinks) {
+  link.addEventListener('click', () => {
+    if (matchMedia('(max-width: 760px)').matches) chapterToggle.setAttribute('aria-expanded', 'false');
+  });
+}
+function chapterName(chapter) {
+  return chapterLinks.find(link => link.hash === '#' + chapter.id)?.textContent || chapter.id;
+}
+function renderChapter(focus = false) {
+  const hash = location.hash.slice(1);
+  const target = document.getElementById(hash);
+  const chapter = target?.closest('main > section') || chapters[0];
+  const index = chapters.indexOf(chapter);
+  for (const page of chapters) page.hidden = page !== chapter;
+  for (const link of chapterLinks) {
+    if (link.hash === '#' + chapter.id) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  }
+  breadcrumb.textContent = 'Документация / ' + chapterName(chapter);
+  chapterToggle.textContent = 'Главы · ' + chapterName(chapter);
+  breadcrumb.hidden = false;
+  tocList.replaceChildren();
+  for (const heading of chapter.querySelectorAll('h3[id], details[id] > summary')) {
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = '#' + (heading.id || heading.parentElement.id);
+    link.textContent = heading.textContent;
+    item.append(link);
+    tocList.append(item);
+  }
+  toc.hidden = !tocList.children.length;
+  pager.replaceChildren();
+  for (const [page, label] of [[chapters[index - 1], '← Назад'], [chapters[index + 1], 'Далее →']]) {
+    if (!page) continue;
+    const link = document.createElement('a');
+    const caption = document.createElement('small');
+    caption.textContent = label;
+    link.href = '#' + page.id;
+    link.append(caption, document.createTextNode(chapterName(page)));
+    pager.append(link);
+  }
+  pager.hidden = false;
+  const destination = target && chapter.contains(target) ? target : chapter;
+  const detail = destination.closest('details');
+  if (detail) detail.open = true;
+  if (focus) {
+    const focusable = destination.querySelector('summary') || destination;
+    if (focusable === destination) focusable.tabIndex = -1;
+    focusable.focus({preventScroll:true});
+  }
+  if (target && chapter.contains(target)) target.scrollIntoView({block:'start'});
+}
+document.querySelector('#searchbar').hidden = false;
+search.addEventListener('input', renderResults);
+search.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    search.value = '';
+    renderResults();
+  } else if (event.key === 'ArrowDown' || event.key === 'Enter') {
+    const first = resultList.querySelector('a');
+    if (!first) return;
+    event.preventDefault();
+    if (event.key === 'Enter') first.click();
+    else first.focus();
+  }
+});
+clearSearch.addEventListener('click', () => {
+  search.value = '';
+  renderResults();
+  search.focus();
+});
+document.addEventListener('keydown', event => {
+  if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey
+      || event.target.closest('input, textarea, select, [contenteditable]')) return;
+  event.preventDefault();
+  search.focus();
+});
+resultList.addEventListener('click', event => {
+  const link = event.target.closest('a');
+  if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+  search.value = '';
+  renderResults();
+  renderChapter(true);
+});
+addEventListener('hashchange', () => renderChapter());
+renderChapter();
+</script>
 </body>
 </html>
