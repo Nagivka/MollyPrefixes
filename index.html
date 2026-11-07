@@ -82,7 +82,8 @@ code{color:var(--primary)}
 .layers figcaption strong{color:var(--ink)}
 .pixels{display:grid;place-items:center;min-height:4.5rem;padding:.75rem;border-radius:10px;background:repeating-conic-gradient(#273043 0 25%,#202839 0 50%) 0/14px 14px}
 .pixels img{grid-area:1/1;width:min(100%,228px);height:auto;image-rendering:pixelated}
-.pixels .tinted{filter:url(#vlastelin-red)}
+.pixels .tinted{filter:url(#vlastelin-red);z-index:0}
+.pixels .tinted+img{z-index:1}
 .table{overflow:auto}
 table{width:100%;border-collapse:collapse;text-align:left}
 th,td{padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
