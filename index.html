@@ -76,6 +76,13 @@ main li+li{margin-top:.3rem}
 .note p{margin:0}
 code,kbd{font-family:ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}
 code{color:var(--primary)}
+.layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:.75rem;margin:.85rem 0 1rem}
+.layers figure{margin:0;padding:.75rem;border-radius:16px;background:var(--high)}
+.layers figcaption{margin-top:.45rem;font-size:.9rem;color:var(--muted)}
+.layers figcaption strong{color:var(--ink)}
+.pixels{display:grid;place-items:center;min-height:4.5rem;padding:.75rem;border-radius:10px;background:repeating-conic-gradient(#273043 0 25%,#202839 0 50%) 0/14px 14px}
+.pixels img{grid-area:1/1;width:min(100%,228px);height:auto;image-rendering:pixelated}
+.pixels .tinted{filter:url(#vlastelin-red)}
 .table{overflow:auto}
 table{width:100%;border-collapse:collapse;text-align:left}
 th,td{padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
@@ -185,6 +192,22 @@ footer{padding:0 0 2rem;color:var(--muted)}
 </section>
 <section id="ranks" data-search data-keywords="привилегия группа новый ранг vip png картинки текстуры ширина высота unicode offset смещение">
 <h2>Своя группа и две текстуры</h2>
+<h3 id="prefix-layers" data-search data-keywords="как работает префикс схема властелин два слоя фон текст png маска сместитель пример картинки перекрытие">Как устроен префикс</h3>
+<p>Два PNG «Властелина» имеют одинаковый размер — <strong>57 × 8 пикселей</strong>. Здесь они увеличены, чтобы были видны края и прозрачность.</p>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+<defs><filter id="vlastelin-red" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 .333333 0 0 0  0 0 .333333 0 0  0 0 0 1 0"/></filter></defs>
+</svg>
+<div class="layers">
+<figure><div class="pixels"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAAICAYAAABDPleNAAAAAXNSR0IArs4c6QAAAM1JREFUOI3dUksORCEIo5k5mDcDTu5shpeKoPvXhETLpwpgzjnlxQAAxCcBLE7+e+djvouvYtnX8Z0ugE3rxIuIfLmIqpZB7HP3x1/Fdzznsz/rZmRdRtWgEvMPEVlMVSf78pm5E891urywjJNuvJHv2QLLunJH3X1Zm3w+rV+3Nt09dM1sm1Snq6piZu0G8fuvk+ymGnxY8HGuNuI2SZ7ATfe2QXz/GLVvjPEYdzV3eIzx8BHP+XzOuZxf6XKNk27FV3VFRBDT3F7yIvwAHiW8S/D+cLIAAAAASUVORK5CYII=" width="57" height="8" alt="Серая плашка с тёмными пикселями на месте букв"></div><figcaption><strong>Фон</strong> · <code>vlastelin.png</code><br>Этот слой получает цвет или анимацию.</figcaption></figure>
+<figure><div class="pixels"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAAICAYAAABDPleNAAAAAXNSR0IArs4c6QAAAHlJREFUOI3tU8sOwCAIk2T//8vdyQQY5eHV9YQFW4S41gWQHQCASYiUOc2z+qhW5xjPfAHAe2W8EfaC+hzFrD7T6ZyrHjzX8X1Y4jOFQ3R0tu/EU2/Q63iYR5brJs11mslqpgNlmuzLlJvMmoxE/XQnm9R3ur4/bsILpq6v0t3AHzMAAAAASUVORK5CYII=" width="57" height="8" alt="Белая надпись ВЛАСТЕЛИН на прозрачном холсте"></div><figcaption><strong>Текст</strong> · <code>vlastelin_text.png</code><br>Белые буквы лежат на прозрачном холсте, в тех же координатах.</figcaption></figure>
+<figure><div class="pixels" role="img" aria-label="Белая надпись ВЛАСТЕЛИН на красной плашке"><img class="tinted" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAAICAYAAABDPleNAAAAAXNSR0IArs4c6QAAAM1JREFUOI3dUksORCEIo5k5mDcDTu5shpeKoPvXhETLpwpgzjnlxQAAxCcBLE7+e+djvouvYtnX8Z0ugE3rxIuIfLmIqpZB7HP3x1/Fdzznsz/rZmRdRtWgEvMPEVlMVSf78pm5E891urywjJNuvJHv2QLLunJH3X1Zm3w+rV+3Nt09dM1sm1Snq6piZu0G8fuvk+ymGnxY8HGuNuI2SZ7ATfe2QXz/GLVvjPEYdzV3eIzx8BHP+XzOuZxf6XKNk27FV3VFRBDT3F7yIvwAHiW8S/D+cLIAAAAASUVORK5CYII=" width="57" height="8" alt=""><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADkAAAAICAYAAABDPleNAAAAAXNSR0IArs4c6QAAAHlJREFUOI3tU8sOwCAIk2T//8vdyQQY5eHV9YQFW4S41gWQHQCASYiUOc2z+qhW5xjPfAHAe2W8EfaC+hzFrD7T6ZyrHjzX8X1Y4jOFQ3R0tu/EU2/Q63iYR5brJs11mslqpgNlmuzLlJvMmoxE/XQnm9R3ur4/bsILpq6v0t3AHzMAAAAASUVORK5CYII=" width="57" height="8" alt=""></div><figcaption><strong>Результат</strong> · фон с цветом <code>&amp;c</code><br>Надпись накладывается поверх подложки.</figcaption></figure>
+</div>
+<ol>
+<li><strong>Ресурспак.</strong> Плагин регистрирует фон и текст как два символа шрифта Minecraft и создаёт третий, невидимый символ со сдвигом влево. Unicode и сдвиг подбираются автоматически.</li>
+<li><strong>LuckPerms.</strong> При выборе оформления плагин записывает личный префикс по схеме <code>&amp;c + фон + сместитель + &amp;f + текст + &amp;r</code>. Сместитель возвращает позицию к началу фона, а <code>&amp;f</code> в шаблоне задаёт белый текст. При включённых шейдерах плагин подставляет служебные RGB для анимации и управления тенью.</li>
+<li><strong>Клиент.</strong> Чат или TAB выводит префикс из LuckPerms. Minecraft читает три символа из шрифта загруженного пака и рисует обе картинки друг над другом.</li>
+</ol>
+<h3 id="rank-setup">Как привязать PNG к группе</h3>
 <ol>
 <li>Подготовьте прозрачные PNG на одинаковом холсте до <strong>256 × 256</strong>. Серый фон лучше поддаётся тонировке. Альфа-канал второго PNG задаёт форму белой надписи.</li>
 <li>Положите PNG в <code>plugins/MollyPrefixes/textures/</code>. В <code>config.yml → prefixes</code> добавьте уникальный ID. Укажите <code>group</code> с точным именем группы LuckPerms, <code>name</code> для подписи в меню и пути <code>background</code> и <code>text</code> от папки MollyPrefixes.</li>
@@ -243,7 +266,7 @@ footer{padding:0 0 2rem;color:var(--muted)}
 <section id="config" data-search data-keywords="config yml параметры настройки конфигурация ключи высота menu apply-on-join шаблон pack format">
 <h2>Параметры конфига</h2>
 <p>Основной файл — <code>plugins/MollyPrefixes/config.yml</code>. После правки выполните <code>/mollyprefixes reload</code>.</p>
-<details id="config-layout" data-search data-keywords="параметры шаблон расположение меню slots кнопки иконка материал title content slots высота ascent offset">
+<details id="config-layout" data-search data-keywords="изменить размер меню параметры шаблон расположение slots кнопки иконка материал title content slots высота ascent offset">
 <summary>Размер текстур и внешний вид меню</summary>
 <div class="answer"><p>В <code>prefixes.&lt;id&gt;</code> параметр <code>height</code> задаёт высоту глифа в игре, <code>ascent</code> — положение относительно строки, <code>icon</code> — материал предмета в меню. Раздел <code>menu</code> задаёт <code>title</code>, <code>size</code> и <code>content-slots</code>. Слоты нумеруются с нуля. Для кнопок используйте <code>slot</code>, <code>material</code>, <code>name</code>, <code>lore</code>, <code>enabled</code> и <code>custom-model-data</code>.</p></div>
 </details>
