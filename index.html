@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Установка и настройка MollyPrefixes 1.0.0 для Paper, Purpur и LuckPerms">
+<title>MollyPrefixes 1.0.0 — документация</title>
+<style>
+:root{color-scheme:dark;--bg:#111621;--panel:#1b2432;--line:#344153;--fg:#edf2fb;--muted:#b7c5d9;--link:#9bddd0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:1rem/1.65 system-ui,sans-serif}
+a{color:var(--link);text-underline-offset:.2em}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--link);outline-offset:4px}
+.wrap{width:min(100% - 2rem,68rem);margin-inline:auto}
+header{padding:3.6rem 0 2rem;border-bottom:1px solid var(--line);background:linear-gradient(145deg,#243549,#161c2a 75%)}
+header p{max-width:55ch;color:var(--muted)}
+.badge{display:inline-block;border:1px solid #5d807f;border-radius:.35rem;padding:.15rem .55rem;font-size:.85rem;color:var(--link)}
+h1,h2,h3{line-height:1.2}
+h1{font-size:clamp(2.25rem,7vw,4.4rem);letter-spacing:-.04em;margin:.65rem 0}
+h2{font-size:1.65rem;margin:0 0 1rem}
+h3{margin:1.4rem 0 .5rem}
+nav ul{display:flex;flex-wrap:wrap;gap:.5rem 1rem;list-style:none;padding:0}
+nav a{display:block;padding:.15rem 0}
+main{padding:2rem 0}
+section{padding:clamp(1rem,3vw,2rem);margin:0 0 1rem;border:1px solid var(--line);border-radius:.7rem;background:var(--panel)}
+li+li{margin-top:.35rem}
+nav li+li{margin-top:0}
+pre{overflow:auto;background:#101621;border:1px solid var(--line);padding:.85rem;border-radius:.4rem}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.9em;overflow-wrap:anywhere;color:#d9f3ee}
+pre code{overflow-wrap:normal}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;vertical-align:top;padding:.55rem;border-bottom:1px solid var(--line)}
+th{color:var(--muted)}
+.note{border-left:3px solid var(--link);padding:.15rem .9rem;background:#151d29}
+footer{padding:0 0 2rem;color:var(--muted)}
+@media print{
+:root{color-scheme:light;--bg:white;--panel:white;--line:#aaa;--fg:#171717;--muted:#333;--link:#004c40}
+header,pre,.note{background:white}
+code{color:inherit}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<span class="badge">Документация · 1.0.0</span>
+<h1>MollyPrefixes</h1>
+<p>Цветные и анимированные префиксы для групп LuckPerms. Каждый префикс собирается из двух PNG: фона и надписи.</p>
+<nav aria-label="Содержание"><ul>
+<li><a href="#install">Установка</a></li><li><a href="#pack">Ресурспак</a></li>
+<li><a href="#ranks">Группы</a></li><li><a href="#menus">Меню</a></li>
+<li><a href="#chat">Чат и TAB</a></li><li><a href="#commands">Команды</a></li>
+<li><a href="#troubleshooting">Проверка</a></li>
+</ul></nav>
+</div>
+</header>
+<main class="wrap">
+<section id="install">
+<h2>Установка</h2>
+<ol>
+<li>Подготовьте Paper или Purpur. Сборка проверена на Purpur 1.21.8 с Java 21. API плагина рассчитан на Paper 1.21.4 и выше.</li>
+<li>Остановите сервер. Положите <code>MollyPrefixes-1.0.0.jar</code> в <code>plugins/</code>. Если LuckPerms ещё отсутствует, добавьте <code>LuckPerms-Bukkit-5.5.91.jar</code> из комплекта. Если LuckPerms уже установлен, используйте имеющийся JAR.</li>
+<li>Запустите сервер. Плагин создаст <code>plugins/MollyPrefixes/config.yml</code> и соберёт <code>MollyPrefixes-pack.zip</code>. В игре с правом администратора выполните <code>/mollyprefixes status</code>.</li>
+<li>Настройте доставку ZIP игрокам и откройте <code>/prefixes</code>. На чистой установке доступно нейтральное оформление для группы <code>default</code>.</li>
+</ol>
+<p class="note">При обновлении сохраните папку <code>plugins/MollyPrefixes/</code>. Она содержит настройки, назначения Unicode и выбор игроков. Старые раздельные конфиги при первом запуске переносятся в новую структуру, исходники сохраняются как <code>.bak</code>.</p>
+<p><a href="https://docs.papermc.io/paper/getting-started/">Установка Paper и требования к Java</a> · <a href="https://luckperms.net/download">Загрузки LuckPerms</a></p>
+</section>
+<section id="pack">
+<h2>Доставка ресурспака</h2>
+<h3>Без сборщика</h3>
+<ol>
+<li>Укажите <code>resource-pack.integration: standalone</code>.</li>
+<li>Разместите сгенерированный <code>plugins/MollyPrefixes/MollyPrefixes-pack.zip</code> на хостинге файлов. Прямая HTTP(S)-ссылка должна отдавать ZIP и быть доступна игрокам.</li>
+<li>Запишите ссылку в <code>resource-pack.delivery-url</code>, оставьте <code>resource-pack</code> в <code>server.properties</code> пустым и выполните <code>/mollyprefixes reload</code>. При изменении локального ZIP обновите файл по указанной ссылке. Плагин вычисляет SHA‑1 по локальному архиву.</li>
+</ol>
+<h3>С установленным сборщиком</h3>
+<p>Выберите один режим <code>resource-pack.integration</code>. Режим <code>auto</code> выбирает единственный обнаруженный сборщик и переходит в <code>standalone</code>, если сборщиков несколько или их нет. Доставку игрокам настраивайте в выбранном сборщике.</p>
+<table>
+<thead><tr><th scope="col">Режим</th><th scope="col">Команда обновления</th></tr></thead>
+<tbody>
+<tr><td><code>nexo</code></td><td><code>nexo reload pack</code></td></tr>
+<tr><td><code>itemsadder</code></td><td><code>iazip</code></td></tr>
+<tr><td><code>craftengine</code></td><td><code>ce reload all</code></td></tr>
+</tbody>
+</table>
+<p>Если у сервера уже есть отдельный пак, добавьте его локальный ZIP или распакованную папку в <code>resource-pack.collision-sources</code>. Пути считаются от корня сервера. Для ручного объединения перенесите ресурсы MollyPrefixes и добавьте его провайдер <code>reference</code> в массив <code>providers</code> вашего <code>assets/minecraft/font/default.json</code>.</p>
+<p>Встроенные анимации требуют совместимого текстового шейдера. Причину конфликта видно в <code>/mollyprefixes status</code>. Для ItemsAdder проверьте <code>text_effects.enabled</code> в его конфиге. Режим <code>animations.mode: external</code> использует маркеры внешнего пака, <code>bundled</code> добавляет встроенный шейдер, <code>off</code> отключает анимации.</p>
+</section>
+<section id="ranks">
+<h2>Оформление групп LuckPerms</h2>
+<ol>
+<li>Подготовьте два прозрачных PNG одинакового размера, до 256 × 256. Фон лучше сделать в градациях серого, чтобы он хорошо тонировался. Текстовый слой задаёт белую надпись.</li>
+<li>Поместите PNG в папку <code>plugins/MollyPrefixes/textures/</code>. В <code>config.yml → prefixes</code> добавьте запись с уникальным ID. Укажите <code>group</code> с точным именем группы LuckPerms, <code>name</code> для подписи и пути <code>background</code> и <code>text</code> от папки MollyPrefixes.</li>
+<li>Примените конфиг через <code>/mollyprefixes reload</code>. Проверьте назначение через <code>/mollyprefixes glyphs &lt;id&gt;</code>.</li>
+</ol>
+<p>Игрок получает меню старшей настроенной привилегии. Сначала учитывается вес группы LuckPerms, затем приоритет её префикса в текущем контексте и основная группа. Unicode и смещение назначаются автоматически. Если нужно задать Unicode вручную, используйте <code>background.unicode</code>, <code>text.unicode</code> и <code>shift.unicode</code> в диапазоне <code>U+E000–U+F8FF</code>.</p>
+<p>Раздел <code>rank-color.colors</code> задаёт обычные цвета. Раздел <code>animations.effects</code> задаёт доступные пресеты. Поля <code>ranks</code> и <code>permission</code> ограничивают доступ. В <code>rank-backgrounds.defaults</code> можно задать подпись, смещение и эффект по умолчанию для группы.</p>
+</section>
+<section id="menus">
+<h2>Меню игрока и администратора</h2>
+<p>Игрок открывает <code>/prefixes</code> или <code>/cosmetics</code> и выбирает цвет либо анимацию. Анимации идут подряд по типам. Для одноцветного эффекта можно выбрать оттенок из палитры ранга. «Свой цвет (HEX)» позволяет ввести RGB, посмотреть предпросмотр и вернуться к недавним цветам. «Сбросить» возвращает префикс LuckPerms.</p>
+<p>Администратор открывает <code>/mollyprefixes → Привилегии</code> и выбирает группу. ЛКМ переключает доступ к конкретному цвету или эффекту, ПКМ возвращает ограничение из YAML. Кнопка «Свой HEX» управляет собственным цветом отдельно. Изменения записываются в <code>admin-state.yml</code>.</p>
+</section>
+<section id="chat">
+<h2>Чат, TAB и плейсхолдеры</h2>
+<p>MollyPrefixes добавляет персональный префикс в LuckPerms. В настройках чата и TAB укажите плейсхолдер префикса LuckPerms, который поддерживает ваш форматтер. Установите приоритет <code>rank-display.weight</code> выше приоритета обычного префикса, если личное оформление должно его перекрывать.</p>
+<p>Если установлен PlaceholderAPI, доступны <code>%mollyprefixes_prefix%</code>, <code>%mollyprefixes_rank%</code>, <code>%mollyprefixes_rank_tab%</code>, <code>%mollyprefixes_rankname%</code>, <code>%mollyprefixes_rankcolor%</code> и <code>%mollyprefixes_rankbg%</code>. Для формата MiniMessage используйте <code>%mollyprefixes_rank_minimessage%</code> там, где форматтер разбирает MiniMessage после подстановки.</p>
+<p>Форматтер должен сохранять Unicode и полный RGB. Замена оттенков на 16 цветов ломает служебные маркеры анимаций.</p>
+</section>
+<section id="commands">
+<h2>Команды и права</h2>
+<table>
+<thead><tr><th scope="col">Команда</th><th scope="col">Действие</th></tr></thead>
+<tbody>
+<tr><td><code>/prefixes</code></td><td>Открыть меню игрока.</td></tr>
+<tr><td><code>/prefixes color &lt;#RRGGBB&gt;</code></td><td>Применить свой цвет.</td></tr>
+<tr><td><code>/mollyprefixes [admin]</code></td><td>Открыть админ-панель. Короткий вариант — <code>/mprefix</code>.</td></tr>
+<tr><td><code>/mollyprefixes ranks</code></td><td>Открыть настройки привилегий.</td></tr>
+<tr><td><code>/mollyprefixes status</code></td><td>Проверить сборщик, ZIP и статус анимаций.</td></tr>
+<tr><td><code>/mollyprefixes reload</code></td><td>Прочитать конфиг заново и пересобрать ZIP.</td></tr>
+<tr><td><code>/mollyprefixes glyphs &lt;id&gt;</code></td><td>Показать Unicode фона, сместителя и текста.</td></tr>
+<tr><td><code>/mollyprefixes code &lt;id&gt; &lt;цвет&gt;</code></td><td>Скопировать команду LuckPerms для постоянного группового префикса.</td></tr>
+</tbody>
+</table>
+<p><code>mollyprefixes.use</code> открывает меню игрока, <code>mollyprefixes.custom-color</code> даёт доступ к HEX. Оба права включены по умолчанию. <code>mollyprefixes.admin</code> по умолчанию доступно операторам.</p>
+</section>
+<section id="troubleshooting">
+<h2>Если префикс не отображается</h2>
+<ul>
+<li><strong>Пустое меню.</strong> Проверьте имя группы в <code>prefixes.&lt;id&gt;.group</code>, наследование в LuckPerms и право <code>mollyprefixes.use</code>.</li>
+<li><strong>Вместо картинок символы или квадраты.</strong> Проверьте, что клиент принял свежий пак и в <code>minecraft:default</code> есть ссылка на шрифт MollyPrefixes.</li>
+<li><strong>Глифы работают, анимации стоят.</strong> Посмотрите статус шейдера и проверьте, сохраняется ли полный RGB в вашем формате чата.</li>
+<li><strong>В чате старый префикс.</strong> Проверьте, какой плейсхолдер использует форматтер и какой приоритет префикса выдаёт LuckPerms.</li>
+</ul>
+</section>
+</main>
+<footer class="wrap">MollyPrefixes 1.0.0 · Инструкция администратора</footer>
+</body>
+</html>
